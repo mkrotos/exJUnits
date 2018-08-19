@@ -20,7 +20,7 @@ public class ExTest {
     }
     @Test
     public void testC(){
-        Assert.assertSame("Różne referencje",s1,s2);
+        Assert.assertNotSame("Takie same referencje",s1,s2);
     }
     @Test
     public void testD(){
