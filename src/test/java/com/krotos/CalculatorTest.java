@@ -36,4 +36,14 @@ class CalculatorTest {
     void divide() {
         Assert.assertEquals(2,calculator.divide(4,2),delta);
     }
+
+    @Test
+    void power() {
+        Assert.assertEquals(9,calculator.power(3,2),delta);
+    }
+
+    @Test
+    void root() {
+        Assert.assertEquals(1.73205,calculator.root(3,2),delta);
+    }
 }
