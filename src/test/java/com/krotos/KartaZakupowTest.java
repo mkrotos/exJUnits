@@ -52,7 +52,7 @@ class KartaZakupowTest {
         }
         assertThrows(KartaZakupow.ProductNotFoundException.class,()->kartaZakupow.removeItem("cos"));
         assertEquals(beforeCount-1,kartaZakupow.getItemCount());
-        assertEquals(beforeBalance-13,kartaZakupow.getBalance());
+        assertEquals(beforeBalance-13,kartaZakupow.getBalance(),delta);
 
     }
 
