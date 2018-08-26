@@ -7,46 +7,49 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class KartaZakupowTest {
-
+    ProductsStorage productsStorage=new ProductsStorage();
+    KartaZakupow kartaZakupow;
     double delta=0.0001;
+
+
+    @BeforeEach
+    public void before(){
+        kartaZakupow=KartaZakupow.createWith(productsStorage);
+    }
 
 
     @Test
     void newList(){
-        KartaZakupow kartaZakupow=new KartaZakupow();
         assertEquals(0,kartaZakupow.getItemCount());
     }
 
     @Test
     void getBalance() {
-        KartaZakupow kartaZakupow=new KartaZakupow();
-        kartaZakupow.addItem("baton",2.2);
-        kartaZakupow.addItem("coal",13);
+        kartaZakupow.addItem("milk");
+        kartaZakupow.addItem("beer");
         assertEquals(15.2,kartaZakupow.getBalance(),delta);
     }
 
     @Test
     void addItem() {
-        KartaZakupow kartaZakupow=new KartaZakupow();
-        kartaZakupow.addItem("baton",2.2);
-        kartaZakupow.addItem("coal",13);
+        kartaZakupow.addItem("milk");
+        kartaZakupow.addItem("beer");
         int beforeCount=kartaZakupow.getItemCount();
         double beforeBalance=kartaZakupow.getBalance();
-        kartaZakupow.addItem("cat",13);
+        kartaZakupow.addItem("cat");
         assertEquals(beforeCount+1,kartaZakupow.getItemCount());
         assertEquals(beforeBalance+13,kartaZakupow.getBalance());
     }
 
     @Test
     void removeItem() {
-        KartaZakupow kartaZakupow=new KartaZakupow();
-        kartaZakupow.addItem("baton",2.2);
-        kartaZakupow.addItem("coal",13);
+        kartaZakupow.addItem("milk");
+        kartaZakupow.addItem("beer");
         int beforeCount=kartaZakupow.getItemCount();
         double beforeBalance=kartaZakupow.getBalance();
 
         try {
-            kartaZakupow.removeItem("coal");
+            kartaZakupow.removeItem("milk");
         } catch (KartaZakupow.ProductNotFoundException e) {
             e.printStackTrace();
         }
@@ -58,16 +61,14 @@ class KartaZakupowTest {
 
     @Test
     void getItemCount() {
-        KartaZakupow kartaZakupow=new KartaZakupow();
-        kartaZakupow.addItem("baton",2.2);
+        kartaZakupow.addItem("milk");
         assertEquals(1,kartaZakupow.getItemCount());
     }
 
     @Test
     void empty() {
-        KartaZakupow kartaZakupow=new KartaZakupow();
-        kartaZakupow.addItem("baton",2.2);
-        kartaZakupow.addItem("coal",13);
+        kartaZakupow.addItem("milk");
+        kartaZakupow.addItem("beer");
         kartaZakupow.empty();
         assertEquals(0,kartaZakupow.getItemCount());
     }

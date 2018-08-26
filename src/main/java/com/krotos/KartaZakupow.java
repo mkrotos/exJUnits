@@ -1,13 +1,20 @@
 package com.krotos;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class KartaZakupow {
     private List<Produkt> list = new ArrayList<>();
+    ProductsStorage productsStorage;
 
-    public KartaZakupow() {
+    public static KartaZakupow createWith(ProductsStorage productsStorage){
+        return new KartaZakupow(productsStorage);
+    }
+
+    public KartaZakupow(ProductsStorage productsStorage) {
+        this.productsStorage = productsStorage;
     }
 
     public double getBalance() {
@@ -15,8 +22,12 @@ public class KartaZakupow {
         return balance;
     }
 
-    public void addItem(String name, double price) {
-        list.add(new Produkt(name, price));
+    public void addItem(String name) {
+        try {
+            list.add(productsStorage.read(name));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public void removeItem(String name) throws ProductNotFoundException {
