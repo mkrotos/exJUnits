@@ -1,2 +1,2 @@
 # exJUnits
-Basic exercises using jUnit
+Basic exercises using jUnit, MySQL and Mockito

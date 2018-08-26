@@ -48,5 +48,77 @@ public class ProductsStorage implements IProductStorage {
         return produkt;
 
     }
+
+    @Override
+    public void clear() {
+
+    }
+
+    @Override
+    public void setQuantity(String name, int quantity) throws SQLException {
+        try {
+            // 1. Get connection
+            myConn = DriverManager.getConnection(dbUrl + noSSL, user, pass);
+            // 2. Create a statement
+            myStmt = myConn.prepareStatement(
+                    "update products " +
+                            "SET quantity=?" +
+                            " where name=?");
+            ((PreparedStatement) myStmt).setInt(1, quantity);
+            ((PreparedStatement) myStmt).setString(2, name);
+            // 3. Execute SQL query
+            int rowsAffected = ((PreparedStatement) myStmt).executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (myRs != null) {
+                myRs.close();
+            }
+
+            if (myStmt != null) {
+                myStmt.close();
+            }
+
+            if (myConn != null) {
+                myConn.close();
+            }
+        }
+    }
+
+    @Override
+    public void addProduct(Produkt produkt) throws SQLException {
+        try {
+            // 1. Get connection
+            myConn = DriverManager.getConnection(dbUrl + noSSL, user, pass);
+            // 2. Create a statement
+            myStmt = myConn.prepareStatement(
+                    "insert into products " +
+                            "(id,name,price,quantity) " +
+                            " values " +
+                            "(?,?,?,?)");
+            ((PreparedStatement) myStmt).setInt(1, produkt.getId());
+            ((PreparedStatement) myStmt).setString(2, produkt.getNazwa());
+            ((PreparedStatement) myStmt).setDouble(3, produkt.getCena());
+            ((PreparedStatement) myStmt).setInt(4, produkt.getQuantity());
+            // 3. Execute SQL query
+            ((PreparedStatement) myStmt).executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (myRs != null) {
+                myRs.close();
+            }
+
+            if (myStmt != null) {
+                myStmt.close();
+            }
+
+            if (myConn != null) {
+                myConn.close();
+            }
+        }
+    }
 }
 

@@ -9,7 +9,7 @@ public class KartaZakupow {
     private List<Produkt> list = new ArrayList<>();
     private IProductStorage productsStorage;
 
-    public static KartaZakupow createWith(IProductStorage productsStorage){
+    public static KartaZakupow createWith(IProductStorage productsStorage) {
         return new KartaZakupow(productsStorage);
     }
 
