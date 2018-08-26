@@ -27,7 +27,7 @@ class KartaZakupowTest {
     void getBalance() {
         kartaZakupow.addItem("milk");
         kartaZakupow.addItem("beer");
-        assertEquals(15.2,kartaZakupow.getBalance(),delta);
+        assertEquals(6.98,kartaZakupow.getBalance(),delta);
     }
 
     @Test
@@ -38,7 +38,7 @@ class KartaZakupowTest {
         double beforeBalance=kartaZakupow.getBalance();
         kartaZakupow.addItem("cat");
         assertEquals(beforeCount+1,kartaZakupow.getItemCount());
-        assertEquals(beforeBalance+13,kartaZakupow.getBalance());
+        assertEquals(beforeBalance+220.99,kartaZakupow.getBalance());
     }
 
     @Test
@@ -55,7 +55,7 @@ class KartaZakupowTest {
         }
         assertThrows(KartaZakupow.ProductNotFoundException.class,()->kartaZakupow.removeItem("cos"));
         assertEquals(beforeCount-1,kartaZakupow.getItemCount());
-        assertEquals(beforeBalance-13,kartaZakupow.getBalance(),delta);
+        assertEquals(beforeBalance-2.99,kartaZakupow.getBalance(),delta);
 
     }
 
