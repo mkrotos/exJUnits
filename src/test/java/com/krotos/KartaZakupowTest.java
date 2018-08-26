@@ -4,17 +4,41 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.sql.SQLException;
+
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.mock;
 
 class KartaZakupowTest {
     ProductsStorage productsStorage=new ProductsStorage();
     KartaZakupow kartaZakupow;
     double delta=0.0001;
 
+    private IProductStorage createStorageMock() {
+        IProductStorage mockStorage=mock(IProductStorage.class);
+
+        try {
+            doAnswer(invoc->{
+                Produkt produkt=new Produkt(123,invoc.getArgument(0),2.99,5);
+                return produkt;
+            }).when(mockStorage).read(anyString());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return mockStorage;
+    }
+
+
+
 
     @BeforeEach
     public void before(){
-        kartaZakupow=KartaZakupow.createWith(productsStorage);
+        //kartaZakupow=KartaZakupow.createWith(productsStorage);
+        kartaZakupow=KartaZakupow.createWith(createStorageMock());
     }
 
 
@@ -27,24 +51,24 @@ class KartaZakupowTest {
     void getBalance() {
         kartaZakupow.addItem("milk");
         kartaZakupow.addItem("beer");
-        assertEquals(6.98,kartaZakupow.getBalance(),delta);
+        assertEquals(5.98,kartaZakupow.getBalance(),delta);
     }
 
     @Test
     void addItem() {
         kartaZakupow.addItem("milk");
-        kartaZakupow.addItem("beer");
+        kartaZakupow.addItem("milk");
         int beforeCount=kartaZakupow.getItemCount();
         double beforeBalance=kartaZakupow.getBalance();
-        kartaZakupow.addItem("cat");
+        kartaZakupow.addItem("milk");
         assertEquals(beforeCount+1,kartaZakupow.getItemCount());
-        assertEquals(beforeBalance+220.99,kartaZakupow.getBalance());
+        assertEquals(beforeBalance+2.99,kartaZakupow.getBalance());
     }
 
     @Test
     void removeItem() {
         kartaZakupow.addItem("milk");
-        kartaZakupow.addItem("beer");
+        kartaZakupow.addItem("milk");
         int beforeCount=kartaZakupow.getItemCount();
         double beforeBalance=kartaZakupow.getBalance();
 

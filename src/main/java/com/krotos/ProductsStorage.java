@@ -2,7 +2,7 @@ package com.krotos;
 
 import java.sql.*;
 
-public class ProductsStorage {
+public class ProductsStorage implements IProductStorage {
     private Connection myConn = null;
     private Statement myStmt = null;
     private ResultSet myRs = null;
@@ -24,7 +24,11 @@ public class ProductsStorage {
             myRs = ((PreparedStatement) myStmt).executeQuery();
             // 4. Process the result set
             while (myRs.next()) {
-                produkt = new Produkt(myRs.getInt("id"), myRs.getString("name"), myRs.getDouble("price"), myRs.getInt("quantity"));
+                produkt = new Produkt(
+                        myRs.getInt("id"),
+                        myRs.getString("name"),
+                        myRs.getDouble("price"),
+                        myRs.getInt("quantity"));
             }
         } catch (SQLException e) {
             e.printStackTrace();

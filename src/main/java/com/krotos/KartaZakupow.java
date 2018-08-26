@@ -7,13 +7,13 @@ import java.util.List;
 
 public class KartaZakupow {
     private List<Produkt> list = new ArrayList<>();
-    ProductsStorage productsStorage;
+    private IProductStorage productsStorage;
 
-    public static KartaZakupow createWith(ProductsStorage productsStorage){
+    public static KartaZakupow createWith(IProductStorage productsStorage){
         return new KartaZakupow(productsStorage);
     }
 
-    public KartaZakupow(ProductsStorage productsStorage) {
+    public KartaZakupow(IProductStorage productsStorage) {
         this.productsStorage = productsStorage;
     }
 
