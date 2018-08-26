@@ -5,9 +5,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
@@ -20,10 +23,26 @@ class KartaZakupowTest {
     private IProductStorage createStorageMock() throws SQLException {
         IProductStorage mockStorage = mock(IProductStorage.class);
 
+        Map<String, Produkt> map = new HashMap<>();
+        Produkt prod1 = new Produkt(1, "milk", 2.99, 10);
+        Produkt prod2 = new Produkt(2, "beer", 3.99, 50);
+        map.put(prod1.getName(), prod1);
+        map.put(prod2.getName(), prod2);
+
         doAnswer(invoc -> {
-            Produkt produkt = new Produkt(123, invoc.getArgument(0), 2.99, 5);
-            return produkt;
+            return map.get(invoc.getArgument(0));
         }).when(mockStorage).read(anyString());
+
+        doAnswer(invoc -> {
+            Produkt produkt = invoc.getArgument(0);
+            String name = produkt.getName();
+            map.put(name, produkt);
+            return null;
+        }).when(mockStorage).addProduct(any(Produkt.class));
+
+        doAnswer(invoc -> {
+            return null;
+        }).when(mockStorage).setQuantity(anyString(), anyInt());
 
 
         return mockStorage;
