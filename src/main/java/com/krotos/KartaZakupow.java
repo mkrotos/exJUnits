@@ -18,7 +18,7 @@ public class KartaZakupow {
     }
 
     public double getBalance() {
-        double balance = list.stream().mapToDouble(Produkt::getCena).sum();
+        double balance = list.stream().mapToDouble(Produkt::getPrice).sum();
         return balance;
     }
 
@@ -32,7 +32,7 @@ public class KartaZakupow {
 
     public void removeItem(String name) throws ProductNotFoundException {
         for (Produkt prod : list) {
-            if (prod.getNazwa().equals(name)) {
+            if (prod.getName().equals(name)) {
                 list.remove(prod);
                 return;
             }

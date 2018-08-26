@@ -66,7 +66,7 @@ public class ProductsStorage implements IProductStorage {
                             " where name=?");
             ((PreparedStatement) myStmt).setInt(1, quantity);
             ((PreparedStatement) myStmt).setString(2, name);
-            // 3. Execute SQL query
+            // 3. Execute SQL update
             int rowsAffected = ((PreparedStatement) myStmt).executeUpdate();
 
         } catch (SQLException e) {
@@ -98,10 +98,10 @@ public class ProductsStorage implements IProductStorage {
                             " values " +
                             "(?,?,?,?)");
             ((PreparedStatement) myStmt).setInt(1, produkt.getId());
-            ((PreparedStatement) myStmt).setString(2, produkt.getNazwa());
-            ((PreparedStatement) myStmt).setDouble(3, produkt.getCena());
+            ((PreparedStatement) myStmt).setString(2, produkt.getName());
+            ((PreparedStatement) myStmt).setDouble(3, produkt.getPrice());
             ((PreparedStatement) myStmt).setInt(4, produkt.getQuantity());
-            // 3. Execute SQL query
+            // 3. Execute SQL update
             ((PreparedStatement) myStmt).executeUpdate();
 
         } catch (SQLException e) {

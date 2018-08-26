@@ -17,17 +17,14 @@ class KartaZakupowTest {
     KartaZakupow kartaZakupow;
     double delta = 0.0001;
 
-    private IProductStorage createStorageMock() {
+    private IProductStorage createStorageMock() throws SQLException {
         IProductStorage mockStorage = mock(IProductStorage.class);
 
-        try {
-            doAnswer(invoc -> {
-                Produkt produkt = new Produkt(123, invoc.getArgument(0), 2.99, 5);
-                return produkt;
-            }).when(mockStorage).read(anyString());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        doAnswer(invoc -> {
+            Produkt produkt = new Produkt(123, invoc.getArgument(0), 2.99, 5);
+            return produkt;
+        }).when(mockStorage).read(anyString());
+
 
         return mockStorage;
     }
